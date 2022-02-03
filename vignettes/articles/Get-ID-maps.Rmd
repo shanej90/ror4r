@@ -1,0 +1,39 @@
+---
+title: "Get ID maps"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+The `get_id_map()` function let's you enter IDs from multiple data sources to return a map of all those held by ROR. THis includes UKPRNs, GRID IDs and Wikidata IDs, amongst others.
+
+```{r example-1, eval = T, echo = T}
+library(ror)
+
+data <- get_id_map("grid.8391.3") # Exeter's grid id
+
+data
+
+```
+
+If you have several IDs you want to map, you can run them through using `lapply()`, or perhaps better off, `purrr::safely()` which will catch any errors you might throw up. __It is only recommended you take this approach if you have a relatively small number of IDs to map__. The response time for trying to do this with too many IDs will be very long. In this case you may be better off using `read_data_dump()` to get a full extract of the dataset.
+```{r example-2, eval = T, echo = T}
+
+#vector ids
+ids <- c("grid.7340.0", "grid.5337.2")
+
+#run
+results <- purrr::map(
+  .x = ids,
+  .f = purrr::safely(function(x) get_id_map(id = x))
+) |>
+  purrr::map_df("result")
+
+results
+
+```

@@ -1,0 +1,80 @@
+---
+title: "Working with organisation lists"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The most useful part of ROR is retrieving lists of organisations. For now, the wrapper for doing this is the most powerful part of the package. This article with a quick run through of how to use the `get_org_list()` function.
+
+## Paramaters
+
+### .search_terms
+
+`.search_terms` let's you enter a search term (or multiple terms, separate by "|") by which to filter results. The API will check this term (or these terms) against every possible field and return any potential match on this basis. This is most likely useful if you need to do a broad brush search and are worried being too specific might exclude useful results.
+
+### .affiliation
+
+`.affiliation` is much more precise than .search_terms. It only looks at three fields (name, label (which often includes names in non_English languages) and aliases). Then multiple search algorithms are tried, with potential matches being scored 0-1 (quite how this scoring is done isn't revealed). Initially even 'below threshold' results are returned, however `get_org_list()` narrows this down to only the chosen results. You should only use this if you really know which organisation you'd like to return, but perhaps don't know its id. For example, searching for affiliation "Exeter" only returns Exeter Phillips Academy - not any organisation in Exeter, UK! "University of Exeter", however, only returns the University of Exeter, UK.
+
+If you use `.affiliation`, the only other parameter you can define are desired page numbers, although it is unlikely you will get more than  one page of results.
+
+### .org_type
+
+ROR categorises the organisations it indexes into different types:
+
+* Archive
+* Company
+* Education
+* Facility
+* Government
+* Healthcare
+* Nonprofit
+* Other
+
+This can be useful to help narrow down results.
+
+### .country_code and .country_name
+
+The API lets you filter results by either [country alpha-2 ISO code](#https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) or by name (as per the same list). You can only use one or the other at a time.
+
+### .page_numbers
+
+The API returns 20 results per page, and defaults to sending the first page of results. There is no option to adjust page size. This is important to remember as with >100,000 organisations registered, returning them all would require more than 5,000 pages. This wrapper is set to send only one request per second (to avoid throttling or taking more than your fair share of bandwidth), so it would take at least 5,000 seconds (83 minutes) to return all results. Therefore it is critical you try and limit your requests in some way using the parameters. If you only want the first page, or first few pages (or last few, etc) you can use this as a way to narrow down what is returned. Caution should be urged though, as before running the request you may not know how many pages there are, or which page the result(s) you want is/are on.
+
+## A worked example
+
+This is a quick example to iteratively narrow down your results - although if you have enough information up front, no reason you can't enter all required parameters at once.
+
+Say we initially want to find education organisations in the UK:
+
+```{r eg-1, eval = T, echo = T}
+library(ror)
+
+data <- get_org_list(.org_type = "Education", .country_code = "GB")
+
+head(data)[, 1:6] #only six columns as there are a lot of wide columns
+
+```
+
+This worked but it took a while. There are 550 results, 28 pages, so you're looking at at least 28 seconds to return all the results in a dataframe.
+
+Maybe we know a bit more about the organisation. Although we might need to filter the `data` dataframe based on this, there are some options using the `.search_terms` parameter. Say we know we're looking for a university - that's likely to be in the `name` field, which is indexed and thus searchable.
+
+```{r eg-2, eval = T, echo = T}
+
+data_2 <- get_org_list(.org_type = "Education", .country_code = "GB", .search_terms = "university")
+
+head(data_2)[, 1:6]
+
+```
+
+We've now narrowed down to 159 results/8 pages, which is roughly three times quicker to run.
+
+At this point it's difficult to do much more to reduce the list. You could make it more expansive using "|" to add an OR clause to search terms if results are too narrow. You can also interact with the resulting dataframe to make it smaller - hopefully it's now small enough to explore.
+
+

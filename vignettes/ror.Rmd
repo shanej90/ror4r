@@ -1,0 +1,35 @@
+---
+title: "ror"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ror}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+It helps to understand what you are trying to achieve before interacting with the API.
+
+## Looking up details for a single organisation
+
+You want to use the `get_single_org()` function. If you provide a ROR ID, this will return a list of all the data provided via the API for the organisation holding said ID. 
+
+## I want to find the ROR ID for an organisation
+
+There are two approaches here.
+
+If you have an identifier from another system, you might want to use `get_id_map()`. This will accept other types of ID (eg, GRID, UKPRN) and return a list of all identifier ROR holds for the same organisation. Note not EVERY type of ID is held so not every ID you try will return results.
+
+Alternatively, if you don't have an alternative ID held by ROR, you can try `get_org_list()`. This returns a list of organisations from the API, meeting parameters you set as part of the function call. It is highly recommened you set these parameters when making the call, as trying to return to much data will take a very long time.
+
+If you do have a lot of IDs you want to look up, or want to scan through lots of information, maybe `read_data_dump()` is the best bet. Approximately every quarter, the ROR team drop an extract of data on Zenodo. This function reads in the data and returns it as a dataframe. 
+
+## I want to browse data
+
+This depends on exactly what you want to do. It might be using `get_single_org()` in conjunction with `lapply()` or `purrr::map()` will get you the data in a usable format. It may be you want to download the whole data dump (`read_data_dump()`) to try and find the info you're after. Or if you have enough information to narrow down the search space, `get_org_list()` is your best bet.
