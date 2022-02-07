@@ -39,11 +39,14 @@ read_data_dump <- function() {
   usethis::ui_info("Reading .json file - may take some time.")
 
   #list of files
-  list_of_files <- utils::unzip(temp_name) |>
+  dd_df <- utils::unzip(temp_name) |>
     jsonlite::fromJSON()
 
   #ui message - json read successfully
   usethis::ui_done(".json file read successfully - process completed.")
+
+  #return the data dump
+  return(dd_df)
 
 
 
