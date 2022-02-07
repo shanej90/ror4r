@@ -43,6 +43,9 @@
     <loc>/reference/index.html</loc>
   </url>
   <url>
+    <loc>/reference/read_data_dump.html</loc>
+  </url>
+  <url>
     <loc>/reference/ror-package.html</loc>
   </url>
 </urlset>
