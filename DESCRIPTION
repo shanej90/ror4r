@@ -1,7 +1,7 @@
 Package: ror
 Type: Package
 Title: Access The Registry of Research (ROR) API Via R
-Version: 0.1.0
+Version: 0.1.1
 Author: Shane Jackson
 Maintainer: Shane Jackson <shane.jackson@gmx.co.uk>
 Description: An R wrapper for interacting with the Registry of Research API

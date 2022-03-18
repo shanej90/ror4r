@@ -1,10 +1,11 @@
 #' Read the ROR data dump
 #'
-#' In addition to their API, ROR also provide a data dump via Zenodo (updated ~quarterly). It is stored in .zip format. This function saves to a temp directory and then turns the .json file within into a dataframe. NOTE THE FILE IS LARGE: >1GB.
+#' In addition to their API, ROR also provide a data dump via Zenodo (updated ~quarterly). It is stored in .zip format. This function saves to a temp directory and then turns the .json file within into a dataframe.
+#' @param os Defaults to Windows - if using Apple set to "mac" to read correct files format.
 #' @return A list of dataframes holding the data dump.
 #' @export
 
-read_data_dump <- function() {
+read_data_dump <- function(os) {
 
   #file url
   zenodo_url <- "https://zenodo.org/api/records/?communities=ror-data&sort=mostrecent"
@@ -39,7 +40,7 @@ read_data_dump <- function() {
   usethis::ui_info("Reading .json file - may take some time.")
 
   #list of files
-  dd_df <- utils::unzip(temp_name) |>
+  dd_df <- utils::unzip(temp_name)[ifelse(os == "mac", 2, 1)] |>
     jsonlite::fromJSON()
 
   #ui message - json read successfully
