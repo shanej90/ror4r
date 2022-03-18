@@ -5,7 +5,7 @@
 #' @return A list of dataframes holding the data dump.
 #' @export
 
-read_data_dump <- function(os) {
+read_data_dump <- function(os = "windows") {
 
   #file url
   zenodo_url <- "https://zenodo.org/api/records/?communities=ror-data&sort=mostrecent"

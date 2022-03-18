@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ror</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
       </span>
     </div>
 
@@ -53,7 +53,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -173,20 +173,20 @@
 <span class="co">#&gt; No encoding supplied: defaulting to UTF-8.</span>
 
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span> <span class="co">#only six columns as there are a lot of wide columns</span>
-<span class="co">#&gt;                          id                                  name email_address</span>
-<span class="co">#&gt; 1 https://ror.org/026y0w292 Twyford Church of England High School          &lt;NA&gt;</span>
-<span class="co">#&gt; 2 https://ror.org/01a8ynn13   The Langton Grammar School for Boys          &lt;NA&gt;</span>
-<span class="co">#&gt; 3 https://ror.org/052411t69            Courtauld Institute of Art          &lt;NA&gt;</span>
-<span class="co">#&gt; 4 https://ror.org/003b78q25                           Wye College          &lt;NA&gt;</span>
-<span class="co">#&gt; 5 https://ror.org/03ngjs524                       Bowel Cancer UK          &lt;NA&gt;</span>
-<span class="co">#&gt; 6 https://ror.org/003jb2109         European School of Osteopathy          &lt;NA&gt;</span>
-<span class="co">#&gt;   ip_addresses established     types</span>
-<span class="co">#&gt; 1         NULL        1954 Education</span>
-<span class="co">#&gt; 2         NULL        1881 Education</span>
-<span class="co">#&gt; 3         NULL        1932 Education</span>
-<span class="co">#&gt; 4         NULL        1447 Education</span>
-<span class="co">#&gt; 5         NULL        1987 Education</span>
-<span class="co">#&gt; 6         NULL        1951 Education</span></code></pre></div>
+<span class="co">#&gt;                          id                                             name</span>
+<span class="co">#&gt; 1 https://ror.org/03b8f3736 Architectural Association School of Architecture</span>
+<span class="co">#&gt; 2 https://ror.org/02v8s3859                        Azad University in Oxford</span>
+<span class="co">#&gt; 3 https://ror.org/002rcdx19               Institute and Faculty of Actuaries</span>
+<span class="co">#&gt; 4 https://ror.org/02t9ezy32                  Bracknell and Wokingham College</span>
+<span class="co">#&gt; 5 https://ror.org/01wwv2135                             Chesterfield College</span>
+<span class="co">#&gt; 6 https://ror.org/01mv04x52          British College of Osteopathic Medicine</span>
+<span class="co">#&gt;   email_address ip_addresses established     types</span>
+<span class="co">#&gt; 1          &lt;NA&gt;         NULL        1847 Education</span>
+<span class="co">#&gt; 2          &lt;NA&gt;         NULL        2004 Education</span>
+<span class="co">#&gt; 3          &lt;NA&gt;         NULL        2011 Education</span>
+<span class="co">#&gt; 4          &lt;NA&gt;         NULL        1963 Education</span>
+<span class="co">#&gt; 5          &lt;NA&gt;         NULL        1984 Education</span>
+<span class="co">#&gt; 6          &lt;NA&gt;         NULL        1936 Education</span></code></pre></div>
 <p>This worked but it took a while. There are 550 results, 28 pages, so you’re looking at at least 28 seconds to return all the results in a dataframe.</p>
 <p>Maybe we know a bit more about the organisation. Although we might need to filter the <code>data</code> dataframe based on this, there are some options using the <code>.search_terms</code> parameter. Say we know we’re looking for a university - that’s likely to be in the <code>name</code> field, which is indexed and thus searchable.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -203,20 +203,20 @@
 <span class="co">#&gt; No encoding supplied: defaulting to UTF-8.</span>
 
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">data_2</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>
-<span class="co">#&gt;                          id                      name email_address</span>
-<span class="co">#&gt; 1 https://ror.org/048kc0s52        Glyndwr University          &lt;NA&gt;</span>
-<span class="co">#&gt; 2 https://ror.org/013meh722   University of Cambridge              </span>
-<span class="co">#&gt; 3 https://ror.org/05cncd958      Cranfield University              </span>
-<span class="co">#&gt; 4 https://ror.org/01rv4p989      Middlesex University          &lt;NA&gt;</span>
-<span class="co">#&gt; 5 https://ror.org/05wwcw481    Bournemouth University          &lt;NA&gt;</span>
-<span class="co">#&gt; 6 https://ror.org/02jx3x895 University College London              </span>
-<span class="co">#&gt;   ip_addresses established     types</span>
-<span class="co">#&gt; 1         NULL        1887 Education</span>
-<span class="co">#&gt; 2         NULL        1209 Education</span>
-<span class="co">#&gt; 3         NULL        1993 Education</span>
-<span class="co">#&gt; 4         NULL        1973 Education</span>
-<span class="co">#&gt; 5         NULL        1992 Education</span>
-<span class="co">#&gt; 6         NULL        1826 Education</span></code></pre></div>
+<span class="co">#&gt;                          id                    name email_address ip_addresses</span>
+<span class="co">#&gt; 1 https://ror.org/01kj2bm70    Newcastle University          &lt;NA&gt;         NULL</span>
+<span class="co">#&gt; 2 https://ror.org/048kc0s52      Glyndwr University          &lt;NA&gt;         NULL</span>
+<span class="co">#&gt; 3 https://ror.org/013meh722 University of Cambridge                       NULL</span>
+<span class="co">#&gt; 4 https://ror.org/05cncd958    Cranfield University                       NULL</span>
+<span class="co">#&gt; 5 https://ror.org/01rv4p989    Middlesex University          &lt;NA&gt;         NULL</span>
+<span class="co">#&gt; 6 https://ror.org/05wwcw481  Bournemouth University          &lt;NA&gt;         NULL</span>
+<span class="co">#&gt;   established     types</span>
+<span class="co">#&gt; 1        1834 Education</span>
+<span class="co">#&gt; 2        1887 Education</span>
+<span class="co">#&gt; 3        1209 Education</span>
+<span class="co">#&gt; 4        1993 Education</span>
+<span class="co">#&gt; 5        1973 Education</span>
+<span class="co">#&gt; 6        1992 Education</span></code></pre></div>
 <p>We’ve now narrowed down to 159 results/8 pages, which is roughly three times quicker to run.</p>
 <p>At this point it’s difficult to do much more to reduce the list. You could make it more expansive using “|” to add an OR clause to search terms if results are too narrow. You can also interact with the resulting dataframe to make it smaller - hopefully it’s now small enough to explore.</p>
 </div>

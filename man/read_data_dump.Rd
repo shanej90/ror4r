@@ -4,11 +4,14 @@
 \alias{read_data_dump}
 \title{Read the ROR data dump}
 \usage{
-read_data_dump()
+read_data_dump(os = "windows")
+}
+\arguments{
+\item{os}{Defaults to Windows - if using Apple set to "mac" to read correct files format.}
 }
 \value{
 A list of dataframes holding the data dump.
 }
 \description{
-In addition to their API, ROR also provide a data dump via Zenodo (updated ~quarterly). It is stored in .zip format. This function saves to a temp directory and then turns the .json file within into a dataframe. NOTE THE FILE IS LARGE: >1GB.
+In addition to their API, ROR also provide a data dump via Zenodo (updated ~quarterly). It is stored in .zip format. This function saves to a temp directory and then turns the .json file within into a dataframe.
 }
