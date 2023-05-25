@@ -7,6 +7,7 @@
 #' @param .country_code Filter to specific countries as per the ISO 3166 alpha-2 list. Can combine with `.org_type` filter.
 #' @param .country_name Alternatively, filter by country code instead of name. Can combine with `.org_type` filter.
 #' @param .page_numbers Return a specific page number (or set of page numbers). Enter as a numeric vector. All results will be returned if you do not specify. If you specify page numbers that are not found, all results will be returned.
+#' @param .include_non_active Option to include 'inactive' or 'withdrawn' entities. Must be 'true' or 'false'.
 #' @return A dataframe holding results as per specifications (list of all orgs returned if no parameters are set).
 #' @export
 
@@ -16,7 +17,8 @@ get_org_list <- function(
   .org_type,
   .country_code,
   .country_name,
-  .page_numbers
+  .page_numbers,
+  .include_non_active = "false"
 ) {
 
   #hack to deal with missing errors
@@ -45,6 +47,11 @@ get_org_list <- function(
   if(!missing(.affiliation) & (!missing(.search_terms) | !missing(.org_type) | !missing(.country_code) | !missing(.country_name)))
     stop("If using `.affiliation` you can not use `.search_terms` or any filters.")
 
+  #non-active must be true or false
+  if(
+    !.include_non_active %in% c("true", "false")
+  ) stop("`.include_non_active` must be one of 'true' or 'false'.")
+
 
   #turn spaces into "%20" for upload-------------------------------------------------
 
@@ -68,7 +75,8 @@ get_org_list <- function(
   ) {
 
     query_settings <- list(
-      page = 1
+      page = 1,
+      all_status = .include_non_active
     )
 
     #affiliation entered
@@ -76,7 +84,8 @@ get_org_list <- function(
 
     query_settings <- list(
       page = 1,
-      affiliation = .affiliation
+      affiliation = .affiliation,
+      all_status = .include_non_active
     )
 
     #search term (plus possibly page_number) only
@@ -84,7 +93,8 @@ get_org_list <- function(
 
     query_settings <- list(
       page = 1,
-      query = .search_terms
+      query = .search_terms,
+      all_status = .include_non_active
     )
 
     #search term and org_type (plus possibly page_number)
@@ -93,6 +103,7 @@ get_org_list <- function(
     query_settings <- list(
       page = 1,
       query = .search_terms,
+      all_status = .include_non_active,
       filter = paste0("types:", .org_type)
     )
 
@@ -102,6 +113,7 @@ get_org_list <- function(
     query_settings <- list(
       page = 1,
       query = .search_terms,
+      all_status = .include_non_active,
       filter = paste0("types:", .org_type, ",country.country_code:", .country_code)
     )
 
@@ -111,6 +123,7 @@ get_org_list <- function(
     query_settings <- list(
       page = 1,
       query = .search_terms,
+      all_status = .include_non_active,
       filter = paste0("types:", .org_type, ",country.country_name:", .country_name)
     )
 
@@ -119,6 +132,7 @@ get_org_list <- function(
 
     query_settings <- list(
       page = 1,
+      all_status = .include_non_active,
       filter = paste0("types:", .org_type)
     )
 
@@ -127,6 +141,7 @@ get_org_list <- function(
 
     query_settings <- list(
       page = 1,
+      all_status = .include_non_active,
       filter = paste0("types:", .org_type, ",country.country_code:", .country_code)
     )
 
@@ -135,6 +150,7 @@ get_org_list <- function(
 
     query_settings <- list(
       page = 1,
+      all_status = .include_non_active,
       filter = paste0("types:", .org_type, ",country.country_name:", .country_name)
     )
 
@@ -143,6 +159,7 @@ get_org_list <- function(
 
     query_settings <- list(
       page = 1,
+      all_status = .include_non_active,
       filter = paste0("country.country_code:", .country_code)
     )
 
@@ -151,6 +168,7 @@ get_org_list <- function(
 
     query_settings <- list(
       page = 1,
+      all_status = .include_non_active,
       filter = paste0("country.country_name:", .country_name)
     )
 
@@ -160,6 +178,7 @@ get_org_list <- function(
     query_settings <- list(
       page = 1,
       query = .search_terms,
+      all_status = .include_non_active,
       filter = paste0("country.country_code:", .country_code)
     )
 
@@ -169,6 +188,7 @@ get_org_list <- function(
     query_settings <- list(
       page = 1,
       query = .search_terms,
+      all_status = .include_non_active,
       filter = paste0("country.country_name:", .country_name)
     )
 
@@ -225,7 +245,8 @@ get_org_list <- function(
     result_df <- lapply(
       X = pages,
       FUN = get_results_by_page,
-      ..affiliation = .affiliation
+      ..affiliation = .affiliation,
+      ..include_non_active = .include_non_active
     ) |>
       dplyr::bind_rows()
 
@@ -240,7 +261,8 @@ get_org_list <- function(
 
     result_df <- lapply(
       X = pages,
-      FUN = get_results_by_page
+      FUN = get_results_by_page,
+      ..include_non_active = .include_non_active
     ) |>
       dplyr::bind_rows()
 
@@ -251,7 +273,8 @@ get_org_list <- function(
     result_df <- lapply(
       X = pages,
       FUN = get_results_by_page,
-      ..search_terms = .search_terms
+      ..search_terms = .search_terms,
+      ..include_non_active = .include_non_active
     ) |>
       dplyr::bind_rows()
 
@@ -263,6 +286,7 @@ get_org_list <- function(
       X = pages,
       FUN = get_results_by_page,
       ..search_terms = .search_terms,
+      ..include_non_active = .include_non_active,
       ..org_type = .org_type
     ) |>
       dplyr::bind_rows()
@@ -274,6 +298,7 @@ get_org_list <- function(
       X = pages,
       FUN = get_results_by_page,
       ..search_terms = .search_terms,
+      ..include_non_active = .include_non_active,
       ..org_type = .org_type,
       ..country_code = .country_code
     ) |>
@@ -287,6 +312,7 @@ get_org_list <- function(
       X = pages,
       FUN = get_results_by_page,
       ..search_terms = .search_terms,
+      ..include_non_active = .include_non_active,
       ..org_type = .org_type,
       ..country_name = .country_name
     ) |>
@@ -299,6 +325,7 @@ get_org_list <- function(
     result_df <- lapply(
       X = pages,
       FUN = get_results_by_page,
+      ..include_non_active = .include_non_active,
       ..org_type = .org_type
     ) |>
       dplyr::bind_rows()
@@ -310,6 +337,7 @@ get_org_list <- function(
       X = pages,
       FUN = get_results_by_page,
       ..org_type = .org_type,
+      ..include_non_active = .include_non_active,
       ..country_code = .country_code
     ) |>
       dplyr::bind_rows()
@@ -321,6 +349,7 @@ get_org_list <- function(
       X = pages,
       FUN = get_results_by_page,
       ..org_type = .org_type,
+      ..include_non_active = .include_non_active,
       ..country_name = .country_name
     ) |>
       dplyr::bind_rows()
@@ -331,7 +360,8 @@ get_org_list <- function(
     result_df <- lapply(
       X = pages,
       FUN = get_results_by_page,
-      ..country_code = .country_code
+      ..country_code = .country_code,
+      ..include_non_active = .include_non_active
     ) |>
       dplyr::bind_rows()
 
@@ -342,7 +372,8 @@ get_org_list <- function(
     result_df <- lapply(
       X = pages,
       FUN = get_results_by_page,
-      ..country_name = .country_name
+      ..country_name = .country_name,
+      ..include_non_active = .include_non_active
     ) |>
       dplyr::bind_rows()
 
@@ -353,7 +384,8 @@ get_org_list <- function(
       X = pages,
       FUN = get_results_by_page,
       ..search_terms = .search_terms,
-      ..country_code = .country_code
+      ..country_code = .country_code,
+      ..include_non_active = .include_non_active
     ) |>
       dplyr::bind_rows()
 
@@ -364,7 +396,8 @@ get_org_list <- function(
       X = pages,
       FUN = get_results_by_page,
       ..search_terms = .search_terms,
-      ..country_name = .country_name
+      ..country_name = .country_name,
+      ..include_non_active = .include_non_active
     ) |>
       dplyr::bind_rows()
 

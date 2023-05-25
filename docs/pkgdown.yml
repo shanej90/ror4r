@@ -1,9 +1,9 @@
-pandoc: 2.14.0.3
-pkgdown: 2.0.2
+pandoc: 2.19.2
+pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   Get-ID-maps: Get-ID-maps.html
   Working-with-organisation-lists: Working-with-organisation-lists.html
-  ror: ror.html
-last_built: 2022-03-18T13:24Z
+  ror4r: ror4r.html
+last_built: 2023-05-25T14:51Z
 

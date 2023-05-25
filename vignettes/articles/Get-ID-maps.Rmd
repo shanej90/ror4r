@@ -10,10 +10,10 @@ knitr::opts_chunk$set(
 ```
 
 
-The `get_id_map()` function let's you enter IDs from multiple data sources to return a map of all those held by ROR. THis includes UKPRNs, GRID IDs and Wikidata IDs, amongst others.
+The `get_id_map()` function let's you enter IDs from multiple data sources to return a map of all those held by ROR. This includes UKPRNs, GRID IDs and Wikidata IDs, amongst others.
 
 ```{r example-1, eval = T, echo = T}
-library(ror)
+library(ror4r)
 
 data <- get_id_map("grid.8391.3") # Exeter's grid id
 

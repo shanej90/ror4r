@@ -10,7 +10,8 @@ get_results_by_page(
   ..affiliation,
   ..org_type,
   ..country_code,
-  ..country_name
+  ..country_name,
+  ..include_non_active = "false"
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ get_results_by_page(
 \item{..country_code}{Filter to specific countries as per the ISO 3166 alpha-2 list. Can combine with \code{..org_type} filter.}
 
 \item{..country_name}{Alternatively, filter by country code instead of name. Can combine with \code{..org_type} filter.}
+
+\item{..include_non_active}{Option to include 'inactive' or 'withdrawn' entities. Must be 'true' or 'false'.}
 }
 \value{
 A dataframe holding the first page of results from the API.

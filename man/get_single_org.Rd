@@ -4,10 +4,12 @@
 \alias{get_single_org}
 \title{Return record for a single specified organisation.}
 \usage{
-get_single_org(id)
+get_single_org(id, include_non_active = "false")
 }
 \arguments{
 \item{id}{The ROR ID of the organisation in question. Can be found using \code{get_org_list()} or via looking up on the ROR website.}
+
+\item{include_non_active}{Option to include 'inactive' or 'withdrawn' entities. Must be 'true' or 'false'.}
 }
 \value{
 A list holding the pertinent details for the chosen organisation.

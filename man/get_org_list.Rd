@@ -10,7 +10,8 @@ get_org_list(
   .org_type,
   .country_code,
   .country_name,
-  .page_numbers
+  .page_numbers,
+  .include_non_active = "false"
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ get_org_list(
 \item{.country_name}{Alternatively, filter by country code instead of name. Can combine with \code{.org_type} filter.}
 
 \item{.page_numbers}{Return a specific page number (or set of page numbers). Enter as a numeric vector. All results will be returned if you do not specify. If you specify page numbers that are not found, all results will be returned.}
+
+\item{.include_non_active}{Option to include 'inactive' or 'withdrawn' entities. Must be 'true' or 'false'.}
 }
 \value{
 A dataframe holding results as per specifications (list of all orgs returned if no parameters are set).

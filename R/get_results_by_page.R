@@ -7,6 +7,7 @@
 #' @param ..org_type Only return specified type of organisation. Any of "Education", "Healthcare", "Company", "Archive", "Nonprofit", "Government", "Facility" or "Other".
 #' @param ..country_code Filter to specific countries as per the ISO 3166 alpha-2 list. Can combine with `..org_type` filter.
 #' @param ..country_name Alternatively, filter by country code instead of name. Can combine with `..org_type` filter.
+#' @param ..include_non_active Option to include 'inactive' or 'withdrawn' entities. Must be 'true' or 'false'.
 #' @return A dataframe holding the first page of results from the API.
 #' @export
 #'
@@ -17,7 +18,8 @@ get_results_by_page <- function(
   ..affiliation,
   ..org_type,
   ..country_code,
-  ..country_name
+  ..country_name,
+  ..include_non_active = "false"
 )  {
 
   #sleep for 1 second to avoid throttling when use in `get_org_list()`
@@ -49,6 +51,11 @@ get_results_by_page <- function(
   if(!missing(..affiliation) & (!missing(..search_terms) | !missing(..org_type) | !missing(..country_code) | !missing(..country_name)))
     stop("If using `..affiliation` you can not use `.search_terms` or any filters.")
 
+  #non-active must be true or false
+  if(
+    !..include_non_active %in% c("true", "false")
+  ) stop("`.include_non_active` must be one of 'true' or 'false'.")
+
   #turn spaces into "%20" for upload-------------------------------------------------
 
   #affiliation
@@ -67,7 +74,8 @@ get_results_by_page <- function(
 
       .query_settings <- list(
         page = ..page_num,
-        affiliation = ..affiliation
+        affiliation = ..affiliation,
+        active_status = ..include_non_active
         )
 
       #no parameters (except maybe page number)
@@ -80,7 +88,8 @@ get_results_by_page <- function(
   ) {
 
     .query_settings <- list(
-      page = ..page_num
+      page = ..page_num,
+      all_status = ..include_non_active
     )
 
     #search term (plus possibly page_number) only
@@ -88,6 +97,7 @@ get_results_by_page <- function(
 
   .query_settings <- list(
     page = ..page_num,
+    all_status = ..include_non_active,
     query = ..search_terms
   )
 
@@ -97,6 +107,7 @@ get_results_by_page <- function(
   .query_settings <- list(
     page = ..page_num,
     query = ..search_terms,
+    all_status = ..include_non_active,
     filter = paste0("types:", ..org_type)
   )
 
@@ -106,6 +117,7 @@ get_results_by_page <- function(
   .query_settings <- list(
     page = ..page_num,
     query = ..search_terms,
+    all_status = ..include_non_active,
     filter = paste0("types:", ..org_type, ",country.country_code:", ..country_code)
   )
 
@@ -115,6 +127,7 @@ get_results_by_page <- function(
   .query_settings <- list(
     page = ..page_num,
     query = ..search_terms,
+    all_status = ..include_non_active,
     filter = paste0("types:", ..org_type, ",country.country_name:", ..country_name)
   )
 
@@ -123,6 +136,7 @@ get_results_by_page <- function(
 
   .query_settings <- list(
     page = ..page_num,
+    all_status = ..include_non_active,
     filter = paste0("types:", ..org_type)
   )
 
@@ -131,6 +145,7 @@ get_results_by_page <- function(
 
   .query_settings <- list(
     page = ..page_num,
+    all_status = ..include_non_active,
     filter = paste0("types:", ..org_type, ",country.country_code:", ..country_code)
   )
 
@@ -139,6 +154,7 @@ get_results_by_page <- function(
 
   .query_settings <- list(
     page = ..page_num,
+    all_status = ..include_non_active,
     filter = paste0("types:", ..org_type, ",country.country_name:", ..country_name)
   )
 
@@ -147,6 +163,7 @@ get_results_by_page <- function(
 
   .query_settings <- list(
     page = ..page_num,
+    all_status = ..include_non_active,
     filter = paste0("country.country_code:", ..country_code)
   )
 
@@ -155,6 +172,7 @@ get_results_by_page <- function(
 
   .query_settings <- list(
     page = ..page_num,
+    all_status = ..include_non_active,
     filter = paste0("country.country_name:", ..country_name)
   )
 
@@ -163,6 +181,7 @@ get_results_by_page <- function(
   .query_settings <- list(
     page = 1,
     query = .search_terms,
+    all_status = ..include_non_active,
     filter = paste0("country.country_code:", .country_code)
   )
 

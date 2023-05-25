@@ -21,11 +21,11 @@ knitr::opts_chunk$set(
 
 <!-- badges: end -->
 
-`ror` is an R wrapper for the [Research Organization Registry (ROR)](#https://ror.org) API. ROR is a registry of more than 100,000 research organisations across the globe. It holds data on location, aliases and type of organisation - plus much more.
+`ror4r` is an R wrapper for the [Research Organization Registry (ROR)](#https://ror.org) API. ROR is a registry of more than 100,000 research organisations across the globe. It holds data on location, aliases and type of organisation - plus much more.
 
-Currently, the `ror` package lets you return a list of organisations (`get_org_list()`) or details for a specific organisation if you know its ID (`get_single_org()`) via the API. If you know IDs from other registries (eg, GRID, UKPRN), you can use `get_id_map()` to lookup other IDs for the organisation ROR has stored.
+Currently, the `ror4r` package lets you return a list of organisations (`get_org_list()`) or details for a specific organisation if you know its ID (`get_single_org()`) via the API. If you know IDs from other registries (eg, GRID, UKPRN), you can use `get_id_map()` to lookup other IDs for the organisation ROR has stored.
 
-You may find the [API documentation](#https://ror.readme.io/docs/rest-api), or the [reference site](#shanj90.github.io/ror) helpful in using this wrapper. The [ROR API GitHub repo](#https://github.com/ror-community/ror-api) may also be of use.
+You may find the [API documentation](https://ror.readme.io/docs/rest-api), or the [reference site](http://shanj90.github.io/ror4r) helpful in using this wrapper. The [ROR API GitHub repo](https://github.com/ror-community/ror-api) may also be of use.
 
 In addition to the API interactions, you can also use `read_data_dump()` to extract a dataframe of all the data from the system.
 
@@ -34,7 +34,7 @@ In addition to the API interactions, you can also use `read_data_dump()` to extr
 You can install the development version of ror like so:
 
 ``` {r eval = F, echo = T} 
-remotes::install_github("shanej90/ror")
+remotes::install_github("shanej90/ror4r")
 ```
 
 ## Example
@@ -42,7 +42,7 @@ remotes::install_github("shanej90/ror")
 The below example shows you how to return details for a specific organisation:
 
 ```{r example, eval = T, echo = T}
-library(ror)
+library(ror4r)
 
 data <- get_single_org(id = "03yghzc09") #University of Exeter
 
@@ -57,4 +57,4 @@ Feel free to fork if you'd like to have a go yourself.
 
 ## Logo attribution
 
-[register icons">Register icons created by Pixel perfect - Flaticon](#https://www.flaticon.com/free-icons/register)
+Icon from [www.flaticon.com](https://www.flaticon.com).

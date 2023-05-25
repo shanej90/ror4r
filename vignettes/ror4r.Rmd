@@ -1,8 +1,8 @@
 ---
-title: "ror"
+title: "ror4r"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{ror}
+  %\VignetteIndexEntry{ror4r}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -26,7 +26,7 @@ There are two approaches here.
 
 If you have an identifier from another system, you might want to use `get_id_map()`. This will accept other types of ID (eg, GRID, UKPRN) and return a list of all identifier ROR holds for the same organisation. Note not EVERY type of ID is held so not every ID you try will return results.
 
-Alternatively, if you don't have an alternative ID held by ROR, you can try `get_org_list()`. This returns a list of organisations from the API, meeting parameters you set as part of the function call. It is highly recommened you set these parameters when making the call, as trying to return to much data will take a very long time.
+Alternatively, if you don't have an alternative ID held by ROR, you can try `get_org_list()`. This returns a list of organisations from the API, meeting parameters you set as part of the function call. It is highly recommended you set these parameters when making the call, as trying to return to much data will take a very long time.
 
 If you do have a lot of IDs you want to look up, or want to scan through lots of information, maybe `read_data_dump()` is the best bet. Approximately every quarter, the ROR team drop an extract of data on Zenodo. This function reads in the data and returns it as a dataframe. 
 

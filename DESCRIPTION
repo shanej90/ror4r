@@ -1,7 +1,7 @@
-Package: ror
+Package: ror4r
 Type: Package
 Title: Access The Registry of Research (ROR) API Via R
-Version: 0.1.1
+Version: 0.1.2
 Author: Shane Jackson
 Maintainer: Shane Jackson <shane.jackson@gmx.co.uk>
 Description: An R wrapper for interacting with the Registry of Research API
@@ -9,7 +9,7 @@ Description: An R wrapper for interacting with the Registry of Research API
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
 Imports:
     curl,

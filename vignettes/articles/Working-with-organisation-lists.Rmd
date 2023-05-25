@@ -53,7 +53,7 @@ This is a quick example to iteratively narrow down your results - although if yo
 Say we initially want to find education organisations in the UK:
 
 ```{r eg-1, eval = T, echo = T}
-library(ror)
+library(ror4r)
 
 data <- get_org_list(.org_type = "Education", .country_code = "GB")
 

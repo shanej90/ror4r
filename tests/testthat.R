@@ -1,4 +1,4 @@
 library(testthat)
-library(ror)
+library(ror4r)
 
-test_check("ror")
+test_check("ror4r")

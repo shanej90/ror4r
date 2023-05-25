@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Access The Registry of Research (ROR) API Via R • ror</title>
+<title>Access The Registry of Research (ROR) API Via R • ror4r</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
@@ -40,15 +40,15 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="index.html">ror</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
+        <a class="navbar-link" href="index.html">ror4r</a>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="articles/ror.html">Get started</a>
+  <a href="articles/ror4r.html">Get started</a>
 </li>
 <li>
   <a href="reference/index.html">Reference</a>
@@ -67,6 +67,9 @@
       <a href="articles/Working-with-organisation-lists.html">Working with organisation lists</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right"></ul>
@@ -87,172 +90,176 @@
 <!-- badges: start -->
 
 <!-- badges: end -->
-<p><code>ror</code> is an R wrapper for the <a href="#https://ror.org" class="external-link">Research Organization Registry (ROR)</a> API. ROR is a registry of more than 100,000 research organisations across the globe. It holds data on location, aliases and type of organisation - plus much more.</p>
-<p>Currently, the <code>ror</code> package lets you return a list of organisations (<code><a href="reference/get_org_list.html">get_org_list()</a></code>) or details for a specific organisation if you know its ID (<code><a href="reference/get_single_org.html">get_single_org()</a></code>) via the API. If you know IDs from other registries (eg, GRID, UKPRN), you can use <code><a href="reference/get_id_map.html">get_id_map()</a></code> to lookup other IDs for the organisation ROR has stored.</p>
-<p>You may find the <a href="#https://ror.readme.io/docs/rest-api" class="external-link">API documentation</a>, or the <a href="#shanj90.github.io/ror">reference site</a> helpful in using this wrapper. The <a href="#https://github.com/ror-community/ror-api" class="external-link">ROR API GitHub repo</a> may also be of use.</p>
+<p><code>ror4r</code> is an R wrapper for the <a href="#https://ror.org" class="external-link">Research Organization Registry (ROR)</a> API. ROR is a registry of more than 100,000 research organisations across the globe. It holds data on location, aliases and type of organisation - plus much more.</p>
+<p>Currently, the <code>ror4r</code> package lets you return a list of organisations (<code><a href="reference/get_org_list.html">get_org_list()</a></code>) or details for a specific organisation if you know its ID (<code><a href="reference/get_single_org.html">get_single_org()</a></code>) via the API. If you know IDs from other registries (eg, GRID, UKPRN), you can use <code><a href="reference/get_id_map.html">get_id_map()</a></code> to lookup other IDs for the organisation ROR has stored.</p>
+<p>You may find the <a href="https://ror.readme.io/docs/rest-api" class="external-link">API documentation</a>, or the <a href="http://shanj90.github.io/ror4r" class="external-link">reference site</a> helpful in using this wrapper. The <a href="https://github.com/ror-community/ror-api" class="external-link">ROR API GitHub repo</a> may also be of use.</p>
 <p>In addition to the API interactions, you can also use <code><a href="reference/read_data_dump.html">read_data_dump()</a></code> to extract a dataframe of all the data from the system.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>You can install the development version of ror like so:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"shanej90/ror"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"shanej90/ror4r"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
 <p>The below example shows you how to return details for a specific organisation:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ror</span><span class="op">)</span>
-
-<span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_single_org.html">get_single_org</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"03yghzc09"</span><span class="op">)</span> <span class="co">#University of Exeter</span>
-<span class="co">#&gt; No encoding supplied: defaulting to UTF-8.</span>
-
-<span class="va">data</span>
-<span class="co">#&gt; $id</span>
-<span class="co">#&gt; [1] "https://ror.org/03yghzc09"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $name</span>
-<span class="co">#&gt; [1] "University of Exeter"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $email_address</span>
-<span class="co">#&gt; NULL</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $ip_addresses</span>
-<span class="co">#&gt; list()</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $established</span>
-<span class="co">#&gt; [1] 1955</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $types</span>
-<span class="co">#&gt; [1] "Education"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $relationships</span>
-<span class="co">#&gt;                                                    label    type</span>
-<span class="co">#&gt; 1                                     Derriford Hospital Related</span>
-<span class="co">#&gt; 2            Peninsula College of Medicine and Dentistry Related</span>
-<span class="co">#&gt; 3                        Royal Devon and Exeter Hospital Related</span>
-<span class="co">#&gt; 4 Wellcome Centre of Cultures and Environments of Health   Child</span>
-<span class="co">#&gt;                          id</span>
-<span class="co">#&gt; 1 https://ror.org/00v5h4y49</span>
-<span class="co">#&gt; 2 https://ror.org/04dtfyh05</span>
-<span class="co">#&gt; 3 https://ror.org/03jrh3t05</span>
-<span class="co">#&gt; 4 https://ror.org/00rbqbc98</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $addresses</span>
-<span class="co">#&gt;        lat       lng state state_code   city geonames_city.id</span>
-<span class="co">#&gt; 1 50.73734 -3.535159    NA         NA Exeter          2649808</span>
-<span class="co">#&gt;   geonames_city.city geonames_city.geonames_admin1.name</span>
-<span class="co">#&gt; 1             Exeter                            England</span>
-<span class="co">#&gt;   geonames_city.geonames_admin1.id geonames_city.geonames_admin1.ascii_name</span>
-<span class="co">#&gt; 1                          6269131                                  England</span>
-<span class="co">#&gt;   geonames_city.geonames_admin1.code geonames_city.geonames_admin2.name</span>
-<span class="co">#&gt; 1                             GB.ENG                              Devon</span>
-<span class="co">#&gt;   geonames_city.geonames_admin2.id geonames_city.geonames_admin2.ascii_name</span>
-<span class="co">#&gt; 1                          2651292                                    Devon</span>
-<span class="co">#&gt;   geonames_city.geonames_admin2.code</span>
-<span class="co">#&gt; 1                          GB.ENG.D4</span>
-<span class="co">#&gt;                  geonames_city.license.attribution</span>
-<span class="co">#&gt; 1 Data from geonames.org under a CC-BY 3.0 license</span>
-<span class="co">#&gt;                 geonames_city.license.license geonames_city.nuts_level1.name</span>
-<span class="co">#&gt; 1 http://creativecommons.org/licenses/by/3.0/           SOUTH WEST (ENGLAND)</span>
-<span class="co">#&gt;   geonames_city.nuts_level1.code geonames_city.nuts_level2.name</span>
-<span class="co">#&gt; 1                            UKK                          Devon</span>
-<span class="co">#&gt;   geonames_city.nuts_level2.code geonames_city.nuts_level3.name</span>
-<span class="co">#&gt; 1                           UKK4                       Devon CC</span>
-<span class="co">#&gt;   geonames_city.nuts_level3.code postcode primary line country_geonames_id</span>
-<span class="co">#&gt; 1                          UKK43       NA   FALSE   NA             2635167</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $links</span>
-<span class="co">#&gt; [1] "http://www.exeter.ac.uk/"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $aliases</span>
-<span class="co">#&gt; list()</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $acronyms</span>
-<span class="co">#&gt; list()</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $status</span>
-<span class="co">#&gt; [1] "active"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $wikipedia_url</span>
-<span class="co">#&gt; [1] "http://en.wikipedia.org/wiki/University_of_Exeter"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $labels</span>
-<span class="co">#&gt;                label iso639</span>
-<span class="co">#&gt; 1 Prifysgol Caerwysg     cy</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $country</span>
-<span class="co">#&gt; $country$country_name</span>
-<span class="co">#&gt; [1] "United Kingdom"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $country$country_code</span>
-<span class="co">#&gt; [1] "GB"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $external_ids</span>
-<span class="co">#&gt; $external_ids$ISNI</span>
-<span class="co">#&gt; $external_ids$ISNI$preferred</span>
-<span class="co">#&gt; NULL</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $external_ids$ISNI$all</span>
-<span class="co">#&gt; [1] "0000 0004 1936 8024"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $external_ids$FundRef</span>
-<span class="co">#&gt; $external_ids$FundRef$preferred</span>
-<span class="co">#&gt; [1] "501100000737"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $external_ids$FundRef$all</span>
-<span class="co">#&gt; [1] "501100000737" "501100000604"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $external_ids$HESA</span>
-<span class="co">#&gt; $external_ids$HESA$preferred</span>
-<span class="co">#&gt; NULL</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $external_ids$HESA$all</span>
-<span class="co">#&gt; [1] "0119"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $external_ids$UCAS</span>
-<span class="co">#&gt; $external_ids$UCAS$preferred</span>
-<span class="co">#&gt; NULL</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $external_ids$UCAS$all</span>
-<span class="co">#&gt; [1] "E84"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $external_ids$UKPRN</span>
-<span class="co">#&gt; $external_ids$UKPRN$preferred</span>
-<span class="co">#&gt; NULL</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $external_ids$UKPRN$all</span>
-<span class="co">#&gt; [1] "10007792"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $external_ids$OrgRef</span>
-<span class="co">#&gt; $external_ids$OrgRef$preferred</span>
-<span class="co">#&gt; NULL</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $external_ids$OrgRef$all</span>
-<span class="co">#&gt; [1] "33719893"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $external_ids$Wikidata</span>
-<span class="co">#&gt; $external_ids$Wikidata$preferred</span>
-<span class="co">#&gt; NULL</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $external_ids$Wikidata$all</span>
-<span class="co">#&gt; [1] "Q1414861"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $external_ids$GRID</span>
-<span class="co">#&gt; $external_ids$GRID$preferred</span>
-<span class="co">#&gt; [1] "grid.8391.3"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $external_ids$GRID$all</span>
-<span class="co">#&gt; [1] "grid.8391.3"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ror4r</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_single_org.html">get_single_org</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"03yghzc09"</span><span class="op">)</span> <span class="co">#University of Exeter</span></span>
+<span><span class="co">#&gt; No encoding supplied: defaulting to UTF-8.</span></span>
+<span></span>
+<span><span class="va">data</span></span>
+<span><span class="co">#&gt; $id</span></span>
+<span><span class="co">#&gt; [1] "https://ror.org/03yghzc09"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $name</span></span>
+<span><span class="co">#&gt; [1] "University of Exeter"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $email_address</span></span>
+<span><span class="co">#&gt; NULL</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $ip_addresses</span></span>
+<span><span class="co">#&gt; list()</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $established</span></span>
+<span><span class="co">#&gt; [1] 1955</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $types</span></span>
+<span><span class="co">#&gt; [1] "Education"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $relationships</span></span>
+<span><span class="co">#&gt;                                                       label    type</span></span>
+<span><span class="co">#&gt; 1                                        Derriford Hospital Related</span></span>
+<span><span class="co">#&gt; 2               Peninsula College of Medicine and Dentistry Related</span></span>
+<span><span class="co">#&gt; 3                           Royal Devon and Exeter Hospital Related</span></span>
+<span><span class="co">#&gt; 4    Wellcome Centre of Cultures and Environments of Health   Child</span></span>
+<span><span class="co">#&gt; 5 GW4 Facility for High-Resolution Electron Cryo-Microscopy Related</span></span>
+<span><span class="co">#&gt; 6                                                       GW4 Related</span></span>
+<span><span class="co">#&gt; 7                           MRC Centre for Medical Mycology   Child</span></span>
+<span><span class="co">#&gt;                          id</span></span>
+<span><span class="co">#&gt; 1 https://ror.org/00v5h4y49</span></span>
+<span><span class="co">#&gt; 2 https://ror.org/04dtfyh05</span></span>
+<span><span class="co">#&gt; 3 https://ror.org/03jrh3t05</span></span>
+<span><span class="co">#&gt; 4 https://ror.org/00rbqbc98</span></span>
+<span><span class="co">#&gt; 5 https://ror.org/022p86748</span></span>
+<span><span class="co">#&gt; 6 https://ror.org/000vekr11</span></span>
+<span><span class="co">#&gt; 7 https://ror.org/00vbzva31</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $addresses</span></span>
+<span><span class="co">#&gt;       lat      lng state state_code   city geonames_city.id geonames_city.city</span></span>
+<span><span class="co">#&gt; 1 50.7236 -3.52751    NA         NA Exeter          2649808             Exeter</span></span>
+<span><span class="co">#&gt;   geonames_city.geonames_admin1.name geonames_city.geonames_admin1.id</span></span>
+<span><span class="co">#&gt; 1                            England                          6269131</span></span>
+<span><span class="co">#&gt;   geonames_city.geonames_admin1.ascii_name geonames_city.geonames_admin1.code</span></span>
+<span><span class="co">#&gt; 1                                  England                             GB.ENG</span></span>
+<span><span class="co">#&gt;   geonames_city.geonames_admin2.name geonames_city.geonames_admin2.id</span></span>
+<span><span class="co">#&gt; 1                              Devon                          2651292</span></span>
+<span><span class="co">#&gt;   geonames_city.geonames_admin2.ascii_name geonames_city.geonames_admin2.code</span></span>
+<span><span class="co">#&gt; 1                                    Devon                          GB.ENG.D4</span></span>
+<span><span class="co">#&gt;                  geonames_city.license.attribution</span></span>
+<span><span class="co">#&gt; 1 Data from geonames.org under a CC-BY 3.0 license</span></span>
+<span><span class="co">#&gt;                 geonames_city.license.license geonames_city.nuts_level1.name</span></span>
+<span><span class="co">#&gt; 1 http://creativecommons.org/licenses/by/3.0/                             NA</span></span>
+<span><span class="co">#&gt;   geonames_city.nuts_level1.code geonames_city.nuts_level2.name</span></span>
+<span><span class="co">#&gt; 1                             NA                             NA</span></span>
+<span><span class="co">#&gt;   geonames_city.nuts_level2.code geonames_city.nuts_level3.name</span></span>
+<span><span class="co">#&gt; 1                             NA                             NA</span></span>
+<span><span class="co">#&gt;   geonames_city.nuts_level3.code postcode primary line country_geonames_id</span></span>
+<span><span class="co">#&gt; 1                             NA       NA   FALSE   NA             2635167</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $links</span></span>
+<span><span class="co">#&gt; [1] "http://www.exeter.ac.uk/"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $aliases</span></span>
+<span><span class="co">#&gt; list()</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $acronyms</span></span>
+<span><span class="co">#&gt; list()</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $status</span></span>
+<span><span class="co">#&gt; [1] "active"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $wikipedia_url</span></span>
+<span><span class="co">#&gt; [1] "http://en.wikipedia.org/wiki/University_of_Exeter"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $labels</span></span>
+<span><span class="co">#&gt;                label iso639</span></span>
+<span><span class="co">#&gt; 1 Prifysgol Caerwysg     cy</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $country</span></span>
+<span><span class="co">#&gt; $country$country_name</span></span>
+<span><span class="co">#&gt; [1] "United Kingdom"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $country$country_code</span></span>
+<span><span class="co">#&gt; [1] "GB"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $external_ids</span></span>
+<span><span class="co">#&gt; $external_ids$ISNI</span></span>
+<span><span class="co">#&gt; $external_ids$ISNI$preferred</span></span>
+<span><span class="co">#&gt; NULL</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $external_ids$ISNI$all</span></span>
+<span><span class="co">#&gt; [1] "0000 0004 1936 8024"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $external_ids$FundRef</span></span>
+<span><span class="co">#&gt; $external_ids$FundRef$preferred</span></span>
+<span><span class="co">#&gt; [1] "501100000737"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $external_ids$FundRef$all</span></span>
+<span><span class="co">#&gt; [1] "501100000737" "501100000604"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $external_ids$HESA</span></span>
+<span><span class="co">#&gt; $external_ids$HESA$preferred</span></span>
+<span><span class="co">#&gt; NULL</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $external_ids$HESA$all</span></span>
+<span><span class="co">#&gt; [1] "0119"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $external_ids$UCAS</span></span>
+<span><span class="co">#&gt; $external_ids$UCAS$preferred</span></span>
+<span><span class="co">#&gt; NULL</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $external_ids$UCAS$all</span></span>
+<span><span class="co">#&gt; [1] "E84"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $external_ids$UKPRN</span></span>
+<span><span class="co">#&gt; $external_ids$UKPRN$preferred</span></span>
+<span><span class="co">#&gt; NULL</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $external_ids$UKPRN$all</span></span>
+<span><span class="co">#&gt; [1] "10007792"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $external_ids$OrgRef</span></span>
+<span><span class="co">#&gt; $external_ids$OrgRef$preferred</span></span>
+<span><span class="co">#&gt; NULL</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $external_ids$OrgRef$all</span></span>
+<span><span class="co">#&gt; [1] "33719893"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $external_ids$Wikidata</span></span>
+<span><span class="co">#&gt; $external_ids$Wikidata$preferred</span></span>
+<span><span class="co">#&gt; NULL</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $external_ids$Wikidata$all</span></span>
+<span><span class="co">#&gt; [1] "Q1414861"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $external_ids$GRID</span></span>
+<span><span class="co">#&gt; $external_ids$GRID$preferred</span></span>
+<span><span class="co">#&gt; [1] "grid.8391.3"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $external_ids$GRID$all</span></span>
+<span><span class="co">#&gt; [1] "grid.8391.3"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="future-developments">Future developments<a class="anchor" aria-label="anchor" href="#future-developments"></a>
@@ -263,20 +270,13 @@
 <div class="section level2">
 <h2 id="logo-attribution">Logo attribution<a class="anchor" aria-label="anchor" href="#logo-attribution"></a>
 </h2>
-<p><a href="#https://www.flaticon.com/free-icons/register" class="external-link">register icons”&gt;Register icons created by Pixel perfect - Flaticon</a></p>
+<p>Icon from <a href="https://www.flaticon.com" class="external-link">www.flaticon.com</a>.</p>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <div class="links">
-<h2 data-toc-skip>Links</h2>
-<ul class="list-unstyled">
-<li><a href="https://cloud.r-project.org/package=ror" class="external-link">View on CRAN</a></li>
-</ul>
-</div>
-
-<div class="license">
+    <div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
@@ -288,7 +288,7 @@
 <div class="citation">
 <h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="authors.html#citation">Citing ror</a></li>
+<li><a href="authors.html#citation">Citing ror4r</a></li>
 </ul>
 </div>
 
@@ -317,7 +317,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
