@@ -25,12 +25,12 @@ read_data_dump <- function(os = "windows") {
   #result in text format
   response_text <- httr::content(response, "text")
 
-  #resposne df
-  file_url <- jsonlite::fromJSON(response_text) |>
-    dplyr::filter(created == max(created)) |>
-    tidyr::unnest(files, names_repair = "unique") |>
-    tidyr::unnest(links...10) |>
-    dplyr::pull(download)
+  #response data
+  file_url <- jsonlite::fromJSON(response_text)[["hits"]][["hits"]][["files"]][[1]][["links"]] |>
+    dplyr::pull(self)
+
+  #ui message - reading json
+  usethis::ui_info("Downloading .zip file - may take some time.")
 
   #save to a temp directory
   temp_name <- tempfile()
@@ -39,9 +39,21 @@ read_data_dump <- function(os = "windows") {
   #ui message - reading json
   usethis::ui_info("Reading .json file - may take some time.")
 
-  #list of files
+  #data dump
   dd_df <- utils::unzip(temp_name)[ifelse(os == "mac", 2, 1)] |>
     jsonlite::fromJSON()
+
+  #list files in zip
+  file_names <- utils::unzip(temp_name, list = T) |> dplyr::pull(Name)
+
+  #delete local copies
+  file.remove(temp_name)
+
+  for (f in file_names) {
+
+    file.remove(f)
+
+  }
 
   #ui message - json read successfully
   usethis::ui_done(".json file read successfully - process completed.")
