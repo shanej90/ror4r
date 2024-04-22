@@ -212,20 +212,20 @@ enter all required parameters at once.</p>
 <span><span class="co">#&gt; No encoding supplied: defaulting to UTF-8.</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span> <span class="co">#only six columns as there are a lot of wide columns</span></span>
-<span><span class="co">#&gt;                          id                                   name</span></span>
-<span><span class="co">#&gt; 1 https://ror.org/052411t69             Courtauld Institute of Art</span></span>
-<span><span class="co">#&gt; 2 https://ror.org/01thz0w07         Wessex Institute of Technology</span></span>
-<span><span class="co">#&gt; 3 https://ror.org/003b78q25                            Wye College</span></span>
-<span><span class="co">#&gt; 4 https://ror.org/044e2ja82               Scotland's Rural College</span></span>
-<span><span class="co">#&gt; 5 https://ror.org/03rd8mf35 Anglo-European College of Chiropractic</span></span>
-<span><span class="co">#&gt; 6 https://ror.org/04kw8et29          Bishop Grosseteste University</span></span>
-<span><span class="co">#&gt;   email_address ip_addresses established     types</span></span>
-<span><span class="co">#&gt; 1          &lt;NA&gt;         NULL        1932 Education</span></span>
-<span><span class="co">#&gt; 2          &lt;NA&gt;         NULL        1986 Education</span></span>
-<span><span class="co">#&gt; 3          &lt;NA&gt;         NULL        1447 Education</span></span>
-<span><span class="co">#&gt; 4                       NULL        2012 Education</span></span>
-<span><span class="co">#&gt; 5          &lt;NA&gt;         NULL        1965 Education</span></span>
-<span><span class="co">#&gt; 6          &lt;NA&gt;         NULL        1862 Education</span></span></code></pre></div>
+<span><span class="co">#&gt;                          id                            name email_address</span></span>
+<span><span class="co">#&gt; 1 https://ror.org/052411t69      Courtauld Institute of Art          &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 2 https://ror.org/01thz0w07  Wessex Institute of Technology          &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 3 https://ror.org/003b78q25                     Wye College          &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 4 https://ror.org/0530xmm89     Royal College of Physicians          &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 5 https://ror.org/023372f11 Royal Northern College of Music          &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 6 https://ror.org/05bh64v90            South Thames College          &lt;NA&gt;</span></span>
+<span><span class="co">#&gt;   ip_addresses established     types</span></span>
+<span><span class="co">#&gt; 1         NULL        1932 Education</span></span>
+<span><span class="co">#&gt; 2         NULL        1986 Education</span></span>
+<span><span class="co">#&gt; 3         NULL        1447 Education</span></span>
+<span><span class="co">#&gt; 4         NULL        1518 Education</span></span>
+<span><span class="co">#&gt; 5         NULL        1973 Education</span></span>
+<span><span class="co">#&gt; 6         NULL        1895 Education</span></span></code></pre></div>
 <p>This worked but it took a while. There are 550 results, 28 pages, so
 you’re looking at at least 28 seconds to return all the results in a
 dataframe.</p>
@@ -246,22 +246,23 @@ we’re looking for a university - that’s likely to be in the
 <span><span class="co">#&gt; No encoding supplied: defaulting to UTF-8.</span></span>
 <span><span class="co">#&gt; No encoding supplied: defaulting to UTF-8.</span></span>
 <span><span class="co">#&gt; No encoding supplied: defaulting to UTF-8.</span></span>
+<span><span class="co">#&gt; No encoding supplied: defaulting to UTF-8.</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">data_2</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span></span>
 <span><span class="co">#&gt;                          id                     name email_address ip_addresses</span></span>
-<span><span class="co">#&gt; 1 https://ror.org/01kj2bm70     Newcastle University          &lt;NA&gt;         NULL</span></span>
-<span><span class="co">#&gt; 2 https://ror.org/04cw6st05     University of London                       NULL</span></span>
-<span><span class="co">#&gt; 3 https://ror.org/04vg4w365  Loughborough University          &lt;NA&gt;         NULL</span></span>
-<span><span class="co">#&gt; 4 https://ror.org/03angcq70 University of Birmingham                       NULL</span></span>
-<span><span class="co">#&gt; 5 https://ror.org/05j0ve876         Aston University          &lt;NA&gt;         NULL</span></span>
-<span><span class="co">#&gt; 6 https://ror.org/01a77tt86    University of Warwick          &lt;NA&gt;         NULL</span></span>
+<span><span class="co">#&gt; 1 https://ror.org/04vg4w365  Loughborough University          &lt;NA&gt;         NULL</span></span>
+<span><span class="co">#&gt; 2 https://ror.org/03angcq70 University of Birmingham                       NULL</span></span>
+<span><span class="co">#&gt; 3 https://ror.org/05j0ve876         Aston University          &lt;NA&gt;         NULL</span></span>
+<span><span class="co">#&gt; 4 https://ror.org/01a77tt86    University of Warwick          &lt;NA&gt;         NULL</span></span>
+<span><span class="co">#&gt; 5 https://ror.org/01v29qb04        Durham University          &lt;NA&gt;         NULL</span></span>
+<span><span class="co">#&gt; 6 https://ror.org/05cncd958     Cranfield University                       NULL</span></span>
 <span><span class="co">#&gt;   established     types</span></span>
-<span><span class="co">#&gt; 1        1834 Education</span></span>
-<span><span class="co">#&gt; 2        1836 Education</span></span>
-<span><span class="co">#&gt; 3        1909 Education</span></span>
-<span><span class="co">#&gt; 4        1900 Education</span></span>
-<span><span class="co">#&gt; 5        1895 Education</span></span>
-<span><span class="co">#&gt; 6        1965 Education</span></span></code></pre></div>
+<span><span class="co">#&gt; 1        1909 Education</span></span>
+<span><span class="co">#&gt; 2        1900 Education</span></span>
+<span><span class="co">#&gt; 3        1895 Education</span></span>
+<span><span class="co">#&gt; 4        1965 Education</span></span>
+<span><span class="co">#&gt; 5        1832 Education</span></span>
+<span><span class="co">#&gt; 6        1993 Education</span></span></code></pre></div>
 <p>We’ve now narrowed down to 159 results/8 pages, which is roughly
 three times quicker to run.</p>
 <p>At this point it’s difficult to do much more to reduce the list. You

@@ -4,10 +4,7 @@
 \alias{read_data_dump}
 \title{Read the ROR data dump}
 \usage{
-read_data_dump(os = "windows")
-}
-\arguments{
-\item{os}{Defaults to Windows - if using Apple set to "mac" to read correct files format.}
+read_data_dump()
 }
 \value{
 A list of dataframes holding the data dump.
